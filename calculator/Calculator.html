@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Calculator.css">
+    <script src="Calculator.js"></script>
+    <title>Calculator</title>
+</head>
+
+<body>
+    <div id="calculator">
+
+        <input type="text" id="resultScreen" placeholder="0">
+
+        <div id="firstRow">
+            <button id="clear-button" class="operator-btn" value="" onclick="clearInput(document.getElementById('clear-button').value)">C</button>
+            <button id="plus-minus" class="operator-btn" value="+/-" onclick="takeValue(document.getElementById('plus-minus').value)">&plusmn</button>
+            <button id="plus" class="operator-btn" value="+" onclick="takeValue(document.getElementById('plus').value)">+</button>
+        </div>
+        <div id="secondRow">
+            <button id="seven" class="numbers-btn" value="7" onclick="takeValue(document.getElementById('seven').value)">7</button>
+            <button id="eight" class="numbers-btn" value="8" onclick="takeValue(document.getElementById('eight').value)">8</button>
+            <button id="nine" class="numbers-btn" value="9" onclick="takeValue(document.getElementById('nine').value)">9</button>
+            <button id="minus" class="operator-btn" value="-" onclick="takeValue(document.getElementById('minus').value)">-</button>
+        </div>
+        <div id="thirdRow">
+            <button id="four" class="numbers-btn" value="4" onclick="takeValue(document.getElementById('four').value)">4</button>
+            <button id="five" class="numbers-btn" value="5" onclick="takeValue(document.getElementById('five').value)">5</button>
+            <button id="six" class="numbers-btn" value="6" onclick="takeValue(document.getElementById('six').value)">6</button>
+            <button id="by" class="operator-btn" value="*" onclick="takeValue(document.getElementById('by').value)">&times</button>
+        </div>
+        <div id="fourthRow">
+            <button id="one" class="numbers-btn" value="1" onclick="takeValue(document.getElementById('one').value)">1</button>
+            <button id="two" class="numbers-btn" value="2" onclick="takeValue(document.getElementById('two').value)">2</button>
+            <button id="three" class="numbers-btn" value="3" onclick="takeValue(document.getElementById('three').value)">3</button>
+            <button id="divide" class="operator-btn" value="/" onclick="takeValue(document.getElementById('divide').value)">&divide</button>
+        </div>
+        <div id="fifthRow">
+            <button id="zero"  class="numbers-btn" value="0" onclick="takeValue(document.getElementById('zero').value)">0</button>
+            <button id="comma" class="numbers-btn" value="," onclick="takeValue(document.getElementById('comma').value)">,</button>
+            <button id="equal-button" class="operator-btn" value="=" onclick="calculate()">=</button>
+        </div>
+
+    </div>
+</body>
+
+</html>
