@@ -1,34 +1,38 @@
-let result = [];
 
 function takeValue(x) {
-	if (result.length < 9){
-	document.getElementById('resultScreen').value += x;
-	result.push(x)
-	} else {
-		document.getElementById('resultScreen').value = result
+let results = document.getElementById('resultScreen');
+if (results.innerText == '0') {
+	results.innerText = '';
+	results.innerText += x;
+} else if (results.innerText.length <= 9) {
+	document.getElementById('resultScreen').innerText += x;
+	if (results.innerText.includes(',') && x == ',') {
+		console.log('manolo');
+	}  
+	}
 	}
 }
 
 function clearInput(y) {
-	document.getElementById('resultScreen').value = y;
+	document.getElementById('resultScreen').innerText = y;
 }
 
 function calculate() {
-	if (document.getElementById('resultScreen').value.includes('+')) {
-		var x = document.getElementById('resultScreen').value.split('+');
-		document.getElementById('resultScreen').value = parseInt(x[0]) + parseInt(x[1]);
+	if (document.getElementById('resultScreen').innerText.includes('+')) {
+		var x = document.getElementById('resultScreen').innerText.split('+');
+		document.getElementById('resultScreen').innerText = parseInt(x[0]) + parseInt(x[1]);
 
-	} else if (document.getElementById('resultScreen').value.includes('-')) {
-		var x = document.getElementById('resultScreen').value.split('-');
-		document.getElementById('resultScreen').value = parseInt(x[0]) - parseInt(x[1]);
+	} else if (document.getElementById('resultScreen').innerText.includes('-')) {
+		var x = document.getElementById('resultScreen').innerText.split('-');
+		document.getElementById('resultScreen').innerText = parseInt(x[0]) - parseInt(x[1]);
 		
-	} else if (document.getElementById('resultScreen').value.includes('*')) {
-		var x = document.getElementById('resultScreen').value.split('*');
-		document.getElementById('resultScreen').value = parseInt(x[0]) * parseInt(x[1]);
+	} else if (document.getElementById('resultScreen').innerText.includes('*')) {
+		var x = document.getElementById('resultScreen').innerText.split('*');
+		document.getElementById('resultScreen').innerText = parseInt(x[0]) * parseInt(x[1]);
 
 	} else {
-		var x = document.getElementById('resultScreen').value.split('/');
-		document.getElementById('resultScreen').value = parseInt(x[0]) / parseInt(x[1]);
+		var x = document.getElementById('resultScreen').innerText.split('/');
+		document.getElementById('resultScreen').innerText = parseInt(x[0]) / parseInt(x[1]);
 	}
 }
 
@@ -39,13 +43,27 @@ function clickHighlight(button) {
 
 function keyNumbers (){
 document.addEventListener('keydown', function(event) {
-	document.getElementById('resultScreen').value += event.key
+	if (event.key >= 0 && event.key <= 9){
+	takeValue(event.key)
+	} else if (event.key === '+') {
+		document.getElementById('resultScreen').innerText += '+'
+	} else if (event.key === '-') {
+		document.getElementById('resultScreen').innerText += '-'
+	} else if (event.key === '*') {
+		document.getElementById('resultScreen').innerText += '*'
+	} else if (event.key === '/') {
+		document.getElementById('resultScreen').innerText += '/'
+	}
+
 	if (event.key === 'Enter') {
 		calculate()
 		unhighlight()
 	} else if (event.key === 'Escape') {
-		document.getElementById('resultScreen').value = 0
-	}})
+		document.getElementById('clear-button').click();
+	} else if (event.key === ',') {
+		document.getElementById('resultScreen').innerText += ','
+	}
+})
 }
 
 function keyHighlight () {
@@ -66,7 +84,6 @@ document.getElementById("plus").style.background = "#2B3549"
 document.getElementById("minus").style.background = "#2B3549"
 document.getElementById("divide").style.background = "#2B3549"
 document.getElementById("by").style.background = "#2B3549"
-	
 }
 
 keyNumbers();
