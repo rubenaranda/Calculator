@@ -11,10 +11,10 @@
 <body>
     <div id="calculator">
 
-        <input type="text" id="resultScreen" placeholder="0">
+        <p id="resultScreen">0</p>
 
         <div id="firstRow">
-            <button id="clear-button" class="operator-btn" value="" onclick="clearInput(document.getElementById('clear-button').value)">C</button>
+            <button id="clear-button" class="operator-btn" value="0" onclick="clearInput(document.getElementById('clear-button').value);unhighlight()">C</button>
             <button id="plus-minus" class="operator-btn" value="+/-" onclick="takeValue(document.getElementById('plus-minus').value)">&plusmn</button>
             <button id="plus" class="operator-btn" value="+" onclick="takeValue(document.getElementById('plus').value);clickHighlight(document.getElementById('plus'))">+</button>
         </div>
