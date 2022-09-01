@@ -5,6 +5,8 @@ Background:
     
 Scenario: Default display screen
 Then in the display screen should be show a 0
+And no button should be highlighted
+And all buttons should be enabled except +/- and 0  //Falta corregir
 
 Scenario Outline: Clicking non-operators screen buttons
 Given in the display screen the number <numberOnScreen> is shown
@@ -83,6 +85,14 @@ Examples:
 |   /  |
 |   *  |
 
+Scenario: Doing an operation with keyboard
+Given the user opens the app
+And the user presses the 2 key
+And the user presses the + key
+And the user presses the 3 key
+When the user presses the enter key
+Then the display should show a 5
+
 Scenario Outline: Writing numbers 
 Given in the display screen the number <numberOnScreen> is shown
 When the user press the number <Button>
@@ -117,7 +127,7 @@ Then in the display screen should be shown <resultDisplay>
 Examples:
 |numberOnScreen| Action |resultDisplay|
 |    1234567890|    7   |   1234567890|
-|    1234567890|   +/-  |  -1234567890|
+|    1234567890|   +/-  |  -1234567890| // Fallo en el css
 |    1234567890|    ,   |   1234567890|
 |     123456789|    ,   |   123456789,|
 |    123456789,|    5   |  123456789,5|
@@ -144,7 +154,7 @@ Examples:
 |         13,14|    -    |       2,781|       10,359|
 |            10|    *    |           8|           80|
 |           5,2|    *    |           8|         41,6|
-|         36,25|    *    |       7,496|       271,73|
+|         36,25|    *    |       7,496|       271,73| //Falla la operacion no se porque
 |            10|    *    |          -8|          -80|
 |           -10|    *    |          -8|           80|
 |           -10|    *    |           8|          -80|
@@ -168,7 +178,7 @@ Examples:
 |         13,14|    *    |       2,781|        2,781|
 |            84|    /    |        -4,3|         -4,3|
 
-Scenario Outline: Performing two number operations with a result number with more than 10 digits
+Scenario Outline: Performing two number operations with a result number with more than 10 nondecimal digits
 Given in the display screen the number 9999999999 is shown
 When the user press <operator>
 And the user writes the number: <secondNumber>
@@ -177,15 +187,20 @@ Then in the display screen should be show ERROR
 
 Examples:
 |numberOnScreen|operator |secondNumber|
-|    9999999999|    +    |           1|
+|    9999999999|    +    |           1|   
 |            -1|    -    |  9999999999|
 |    9999999999|    *    |           2|
-|    9999999999|    /    |         0,1|
+|    9999999999|    /    |         0,1| //Da cero no se porque|  
 
 Scenario: Clicking the C button
 Given the user opens the Calculator
-When I click the C button
-Then the Calculator resets
+When the user clicks the C button
+Then the Calculator display returns to the default
+
+Scenario: Pressing the escape key
+Given the user opens the Calculator
+When the user presses the escape key
+Then the Calculator display returns to the default
 
 Scenario Outline: Clicking two different operation buttons
 Given in the display screen the number <firstNumber> is shown
@@ -199,7 +214,7 @@ Examples:
 |firstNumber|Button|Button2|secondNumber|resultDisplay|
 |         12|   +  |   /   |           6|            2|
 |       1234|   -  |   +   |          31|         1265|
-|       9,26|   *  |   *   |       2,15 |       19,909|
+|       9,26|   *  |   *   |       2,15 |       19,909| //Limitar los repetidos en el operators|
 
 Scenario Outline: Doing a new operation
 Given in the display screen the number <firstNumber> is shown
@@ -212,7 +227,7 @@ Then the display screen shows <thirdNumber>
 
 Examples:
 |firstNumber|Button|secondNumber|resultDisplay|thirdNumber|
-|       12,2|   +  |           6|         18,2|         13|
+|       12,2|   +  |           6|         18,2|         13| //YA NO PUTO FUNCIONA
 | 1234567890|   +  |           1|   1234567891|        -24|
 
 Scenario Outline: Using the previous result in a new operation
@@ -263,20 +278,20 @@ Examples:
 
 Scenario: Doing an operation without a second number
 Given in the display screen the number 23 is shown
-And the user press +
+And the user press +                                  OTRO QUE NO PUTO FUNCIONA
 And the user press the = 
 Then the display screen should show ERROR
 
 Scenario: Doing an operation without a first number
 Given the user opens the app
 And the user presses -
-And the user writes 23
+And the user writes 23                               OTRO QUE NO PUTO FUNCIONA
 And the user presses the = 
 Then the display screen should show -23
 
-Scenario: Button Disabled
+Scenario: Button Disabled -> Do it on Figma
 Given in the display screen the -123456789,5 is shown
-When I hover over a numerical button
+When the user hovers over a numerical button
 Then the cursor does not change to a clicking cursor
 
 Scenario Outline: Disabling buttons
@@ -294,6 +309,18 @@ Scenario: Disabling the second comma
 Given in the display screen the number 3,141592 is shown
 Then the comma button is disabled
 
+Scenario Outline: Disabling the changing signs button
+Given the user opens the app
+When the user clicks the sequence of buttons <sequence>
+Then the changing signs should be disabled
+
+Example:
+|sequence|
+|     0  |
+|    0 , |
+|  2 +   |
+| 1 / 0 =|
+
 Scenario Outline: Disabling because of error
 Given the user opens the app
 When the user clicks the sequence of buttons <sequence>
@@ -303,7 +330,7 @@ Example:
 |sequence|
 |1 / 0 = |
 |1 / 0 + |
-|1 / =   |
+|1 / =   | // Otra que ni funciona
 |9999999999 + 1 =|
 |9999999999 + 1 *|
 |9999999999 +/- - 1 =|
@@ -312,7 +339,7 @@ Example:
 Scenario Outline: Reenabling buttons with no error
 Given there are unabled buttons
 And no ERROR on the display screen
-When I click on the button <button>
+When the user clicks on the button <button>
 Then all buttons are enabled again
 
 Examples:
@@ -327,7 +354,7 @@ Examples:
 Scenario: Reenabling buttons with error
 Given there are unabled buttons
 And there is an ERROR on the display screen
-When I click on the button C
+When the user clicks on the button C
 Then all buttons are enabled again
 
 Scenario Outline: Showing the first number after pressing operation
@@ -352,4 +379,4 @@ Examples:
 |firstNumber|resultDisplay|
 |           |      0      |
 |         10|      10     |
-|       -10,|     -10     |
+|       -10,|     -10     | //Otra que no funciona
