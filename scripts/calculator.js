@@ -34,6 +34,7 @@ function getDisplayValue(x) {
   if (operator != "" || isMutipleOperation == true) {
     secondNumber = updateDisplay(x, secondNumber);
   }
+  console.log('hola')
 }
 
 function deshabilitingTwoFirstNumbers () {
