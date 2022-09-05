@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Calculator.css">
+    <title>Calculator</title>
+</head>
+
+<body>
+    <div id="calculator" >
+
+        <p id="resultScreen" data-testid="display">0</p>
+
+        <div id="firstRow">
+            <button id="clear-button" class="operator-btn" value="0"  data-testid="C" onclick="clearInput(document.getElementById('clear-button').value)">C</button>
+            <button id="plus-minus" class="operator-btn" value="+/-" data-testid="+-" onclick="clickHighlight(document.getElementById('plus-minus'));setPositiveOrNegative()">&plusmn</button>
+            <button id="plus" class="operator-btn" value="+" data-testid="+" onclick="clickHighlight(document.getElementById('plus'));setOperators(document.getElementById('plus').value);unhighlightNumericButtons()">+</button>
+        </div>
+        <div id="secondRow">
+            <button id="seven" class="numbers-btn" value="7" data-testid="7" onclick="getDisplayValue(document.getElementById('seven').value)">7</button>
+            <button id="eight" class="numbers-btn" value="8" data-testid="8" onclick="getDisplayValue(document.getElementById('eight').value)">8</button>
+            <button id="nine" class="numbers-btn" value="9" data-testid="9" onclick="getDisplayValue(document.getElementById('nine').value)">9</button>
+            <button id="minus" class="operator-btn" value="-" data-testid="-" onclick="clickHighlight(document.getElementById('minus'));setOperators(document.getElementById('minus').value);unhighlightNumericButtons()">-</button>
+        </div>
+        <div id="thirdRow">
+            <button id="four" class="numbers-btn" value="4" data-testid="4" onclick="getDisplayValue(document.getElementById('four').value)">4</button>
+            <button id="five" class="numbers-btn" value="5" data-testid="5" onclick="getDisplayValue(document.getElementById('five').value)">5</button>
+            <button id="six" class="numbers-btn" value="6" data-testid="6" onclick="getDisplayValue(document.getElementById('six').value)">6</button>
+            <button id="by" class="operator-btn" value="*" data-testid="*" onclick="clickHighlight(document.getElementById('by'));setOperators(document.getElementById('by').value);unhighlightNumericButtons()">&times</button>
+        </div>
+        <div id="fourthRow">
+            <button id="one" class="numbers-btn" value="1" data-testid="1" onclick="getDisplayValue(document.getElementById('one').value)">1</button>
+            <button id="two" class="numbers-btn" value="2" data-testid="2" onclick="getDisplayValue(document.getElementById('two').value)">2</button>
+            <button id="three" class="numbers-btn" value="3" data-testid="3" onclick="getDisplayValue(document.getElementById('three').value)">3</button>
+            <button id="divide" class="operator-btn" value="/" data-testid="/" onclick="clickHighlight(document.getElementById('divide'));setOperators(document.getElementById('divide').value);unhighlightNumericButtons()">&divide</button>
+        </div>
+        <div id="fifthRow">
+            <button id="zero"  class="numbers-btn" value="0" data-testid="0" onclick="getDisplayValue(document.getElementById('zero').value)">0</button>
+            <button id="comma" class="numbers-btn" value="," data-testid="," onclick="getDisplayValue(document.getElementById('comma').value)">,</button>
+            <button id="equal-button" class="operator-btn" value="=" data-testid="=" onclick="unhighlightAll();calculate('=');errorDisplayed()">=</button>
+        </div>
+
+    </div>
+    <script src="Calculator.js"></script>
+</body>
+</html>
