@@ -127,7 +127,7 @@ Then in the display screen should be shown <resultDisplay>
 Examples:
 |numberOnScreen| Action |resultDisplay|
 |    1234567890|    7   |   1234567890|
-|    1234567890|   +/-  |  -1234567890| // Fallo en el css
+|    1234567890|   +/-  |  -1234567890|
 |    1234567890|    ,   |   1234567890|
 |     123456789|    ,   |   123456789,|
 |    123456789,|    5   |  123456789,5|
@@ -154,7 +154,7 @@ Examples:
 |         13,14|    -    |       2,781|       10,359|
 |            10|    *    |           8|           80|
 |           5,2|    *    |           8|         41,6|
-|         36,25|    *    |       7,496|       271,73| //Falla la operacion no se porque
+|         36,25|    *    |       7,496|       271,73| 
 |            10|    *    |          -8|          -80|
 |           -10|    *    |          -8|           80|
 |           -10|    *    |           8|          -80|
@@ -190,7 +190,7 @@ Examples:
 |    9999999999|    +    |           1|   
 |            -1|    -    |  9999999999|
 |    9999999999|    *    |           2|
-|    9999999999|    /    |         0,1| //Da cero no se porque|  
+|    9999999999|    /    |         0,1|
 
 Scenario: Clicking the C button
 Given the user opens the Calculator
@@ -214,7 +214,7 @@ Examples:
 |firstNumber|Button|Button2|secondNumber|resultDisplay|
 |         12|   +  |   /   |           6|            2|
 |       1234|   -  |   +   |          31|         1265|
-|       9,26|   *  |   *   |       2,15 |       19,909| //Limitar los repetidos en el operators|
+|       9,26|   *  |   *   |       2,15 |       19,909|
 
 Scenario Outline: Doing a new operation
 Given in the display screen the number <firstNumber> is shown
@@ -227,7 +227,7 @@ Then the display screen shows <thirdNumber>
 
 Examples:
 |firstNumber|Button|secondNumber|resultDisplay|thirdNumber|
-|       12,2|   +  |           6|         18,2|         13| //YA NO PUTO FUNCIONA
+|       12,2|   +  |           6|         18,2|         13| 
 | 1234567890|   +  |           1|   1234567891|        -24|
 
 Scenario Outline: Using the previous result in a new operation
@@ -239,11 +239,11 @@ And the operation result <resultDisplay> is shown
 And the user presses <Button2>
 And the user writes the number <thirdNumber>
 And the user presses the =
-Then the display screen shows <resultDisplay2>
+Then the display screen shows <resultDisplay2> error
 
 Examples:
 |firstNumber|Button|secondNumber|resultDisplay|Button2|thirdNumber|resultDisplay2|
-|       12,2|   +  |           6|         18,2|   +   |         13|          31,2|
+|       12,2|   +  |           6|         18,2|   +   |         13|          31,2| 
 |        123|   -  |       -24,8|        147,8|   *   |         12|        1773,6|
 | 1234567890|   /  |        -2,5|   -493827156|   -   |        147|    -493827303|
 
@@ -255,7 +255,7 @@ And the user presses <Button2>
 And the operation result <resultDisplay> is shown
 And the user writes the number <thirdNumber>
 And the user presses the =
-Then the display screen shows <resultDisplay2>
+Then the display screen shows <resultDisplay2> error
 
 Examples:
 |firstNumber|Button|secondNumber|resultDisplay|Button2|thirdNumber|resultDisplay2|
@@ -268,7 +268,7 @@ Given in the display screen the number <numberOnScreen> is shown
 And the user press /
 And the user writes the number: 0
 When the user press the =  
-Then the display screen should show ERROR
+Then the display screen should show 
 
 Examples:
 |numberOnScreen|
@@ -278,14 +278,14 @@ Examples:
 
 Scenario: Doing an operation without a second number
 Given in the display screen the number 23 is shown
-And the user press +                                  OTRO QUE NO PUTO FUNCIONA
+And the user press +                                  
 And the user press the = 
 Then the display screen should show ERROR
 
 Scenario: Doing an operation without a first number
 Given the user opens the app
 And the user presses -
-And the user writes 23                               OTRO QUE NO PUTO FUNCIONA
+And the user writes 23                               
 And the user presses the = 
 Then the display screen should show -23
 
@@ -330,7 +330,7 @@ Example:
 |sequence|
 |1 / 0 = |
 |1 / 0 + |
-|1 / =   | // Otra que ni funciona
+|1 / =   | 
 |9999999999 + 1 =|
 |9999999999 + 1 *|
 |9999999999 +/- - 1 =|

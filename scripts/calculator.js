@@ -2,6 +2,8 @@ var firstNumber = 0;
 
 var secondNumber = 0;
 
+var thirdNumber = 0;
+
 var operator = "";
 
 var operatorButtons = document.getElementsByClassName("operator-btn");
@@ -10,9 +12,11 @@ var isMutipleOperation = false;
 
 var result = 0;
 
+var previousKey = "";
+
 function getDisplayValue(x) {
   let results = document.getElementById("resultScreen");
-  if (results.innerText == "0" ||(firstNumber == null && secondNumber == null && operator == "")) {
+  if (results.innerText == "0" ||(firstNumber == 0 && secondNumber == 0 && operator == "")) {
     if (x == ",") {
       document.getElementById("resultScreen").innerText = "0,";
       firstNumber = "0,";
@@ -34,25 +38,8 @@ function getDisplayValue(x) {
   if (operator != "" || isMutipleOperation == true) {
     secondNumber = updateDisplay(x, secondNumber);
   }
-  console.log('hola')
-}
 
-function deshabilitingTwoFirstNumbers () {
-  let zeroNumber = document.getElementById("zero");
-  let changePlusMinusButton = document.getElementById("plus-minus");
-  zeroNumber.classList.add("disabled-numeric-btn");
-  zeroNumber.disabled = true;
-  changePlusMinusButton.classList.add("disabled-operator-btn");
-  changePlusMinusButton.disabled = true;
-}
-
-function enhalingTwoFirstNumbers () {
-  let zeroNumber = document.getElementById("zero");
-  let changePlusMinusButton = document.getElementById("plus-minus");
-  zeroNumber.classList.remove("disabled-numeric-btn");
-  zeroNumber.disabled = false;
-  changePlusMinusButton.classList.remove("disabled-operator-btn")
-  changePlusMinusButton.disabled = false;
+  previousKey = x;
 }
 
 function updateDisplay(value, number) {
@@ -95,7 +82,6 @@ function setPositiveOrNegative() {
     display.innerText = display.innerText.substring(display.innerText.length,1);
     isNegative = false;
   }
-
 }
 
 function checkZero (display) {
@@ -112,7 +98,6 @@ function disableButtons() {
     numericalButtons[i].classList.add("disabled-numeric-btn");
     numericalButtons[i].disabled = true;
   }
-  
 }
 
 function disableOperatorButtons() {
@@ -183,7 +168,7 @@ function setOperators(value) {
   if (operator == "") {
     firstNumber = document.getElementById("resultScreen").innerText;
     operator = value;
-  } else if (secondNumber != 0 || (secondNumber == 0 && (operator == '/' || operator == '*'))) {
+  } else if (secondNumber != 0 || ((secondNumber == 0 && (operator == '/' || operator == '*') && operator != previousKey))){
     firstNumber = calculate(operator);
 	  isMutipleOperation = true;
     secondNumber = 0;
@@ -196,6 +181,7 @@ function setOperators(value) {
     }
     operator = value;
   }
+  previousKey = value;
 }
 
 function getKeyNumbers() {
@@ -221,6 +207,9 @@ function getKeyNumbers() {
     if (event.key == "Enter") {
       unhighlightAll();
       calculate("=");
+      firstNumber = 0;
+      secondNumber = 0;
+      operator = "";
       errorDisplayed();
     } else if (event.key === "Escape") {
       document.getElementById("clear-button").click();
@@ -228,7 +217,8 @@ function getKeyNumbers() {
       getDisplayValue(event.key);
     }
     if (event.key === "Control" && currentDisplay != 'Error') {
-      setHiglightOperator("plus-minus");
+      document.getElementById('plus-minus').classList.add("disabled-operator-btn");
+      document.getElementById('plus-minus').disabled = true;
       if (operator != '' ){
         isNegative = false;
         setPositiveOrNegative();
@@ -240,7 +230,7 @@ function getKeyNumbers() {
 }
 
 function calculate(key) {
-  if (secondNumber == null || firstNumber == null) {
+  if (secondNumber == 0 && operator != "") {
     document.getElementById("resultScreen").innerText = "Error";
     errorDisplayed();
   } else if (operator == "+") {
@@ -260,13 +250,6 @@ if (result.toString().length > 11 && result.toString().includes('.')) {
 else {
   checkLength();
 }
-  /*if (result.toString().length > 10 && result.toString().includes(',') == true) {
-    console.log('hola')
-    document.getElementById("resultScreen").innerText = "Error";
-  	} else if (result.toString().length > 10 && result.toString().includes(',')) {
-      document.getElementById("resultScreen").innerText = checkDecimalLength(result)
-    }
-	setMultiOperations(key);*/
 	return result;
 } 
 
@@ -296,9 +279,10 @@ function errorDisplayed() {
  
 function addOperation() {
   secondNumber = document.getElementById("resultScreen").innerText;
+
   if (firstNumber.toString().includes(",") || secondNumber.toString().includes(",")) {
     changeCommaToDot ();
-  } 
+  }
   result = parseFloat(firstNumber) + parseFloat(secondNumber);
   document.getElementById("resultScreen").innerText = changeDotToComma(result);
   return result
@@ -379,6 +363,12 @@ function unhighlightAll() {
   }
   document.getElementById("comma").classList.remove("disabled-comma-btn");
   document.getElementById("comma").disabled = false;
+}
+
+function calculateThirdNumber () {
+  if (result != null) {
+
+  }
 }
 
 getKeyNumbers();
