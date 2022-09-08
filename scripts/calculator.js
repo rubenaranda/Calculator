@@ -188,18 +188,18 @@ function getKeyNumbers() {
   document.addEventListener("keydown", function (event) {
     event.preventDefault();
     let currentDisplay = document.getElementById("resultScreen").innerText;
-    if (event.key >= 0 && event.key <= 9 && currentDisplay != 'Error') {
+    if (event.key >= 0 && event.key <= 9 && currentDisplay != 'ERROR') {
       getDisplayValue(event.key);
-    } else if (event.key == "+" && currentDisplay != 'Error') {
+    } else if (event.key == "+" && currentDisplay != 'ERROR') {
       setOperators(event.key);
       setHiglightOperator("plus");
-    } else if (event.key == "-" && currentDisplay != 'Error') {
+    } else if (event.key == "-" && currentDisplay != 'ERROR') {
       setOperators(event.key);
       setHiglightOperator("minus");
-    } else if (event.key == "*" && currentDisplay != 'Error') {
+    } else if (event.key == "*" && currentDisplay != 'ERROR') {
       setOperators(event.key);
       setHiglightOperator("by");
-    } else if (event.key == "/" && currentDisplay != 'Error') {
+    } else if (event.key == "/" && currentDisplay != 'ERROR') {
       setOperators(event.key);
       setHiglightOperator("divide");
     }
@@ -216,7 +216,7 @@ function getKeyNumbers() {
     } else if (event.key === ",") {
       getDisplayValue(event.key);
     }
-    if (event.key === "Control" && currentDisplay != 'Error') {
+    if (event.key === "Control" && currentDisplay != 'ERROR') {
       document.getElementById('plus-minus').classList.add("disabled-operator-btn");
       document.getElementById('plus-minus').disabled = true;
       if (operator != '' ){
@@ -230,8 +230,9 @@ function getKeyNumbers() {
 }
 
 function calculate(key) {
+  let display = document.getElementById("resultScreen").innerText
   if (secondNumber == 0 && operator != "") {
-    document.getElementById("resultScreen").innerText = "Error";
+    display = "ERROR";
     errorDisplayed();
   } else if (operator == "+") {
     result = addOperation();
@@ -241,11 +242,14 @@ function calculate(key) {
     result = multiplyOperation();
   }  else if (operator == "/") {
     result = divideOperation();
+  } else if (display.length[display.length-1] == ',') {
+    console.log('hola')
+    result = display.slice(0,display.length-1)
   }
 if (result.toString().length > 11 && result.toString().includes('.')) {
   document.getElementById("resultScreen").innerText = cuttingDecimals(result);
 } else if (result.toString().length > 10) {
-  document.getElementById("resultScreen").innerText = "Error";
+  document.getElementById("resultScreen").innerText = "ERROR";
 } 
 else {
   checkLength();
@@ -269,7 +273,7 @@ function changeDotToComma(result) {
 }
 
 function errorDisplayed() {
-  if (document.getElementById("resultScreen").innerText == "Error") {
+  if (document.getElementById("resultScreen").innerText == "ERROR") {
     disableButtons();
     disableOperatorButtons();
     document.getElementById("clear-button").classList.remove("disabled-operator-btn");
@@ -315,7 +319,7 @@ function divideOperation() {
     changeCommaToDot ();
   } 
   if (secondNumber == "0" && operator == "/") {
-    document.getElementById("resultScreen").innerText = "Error";
+    document.getElementById("resultScreen").innerText = "ERROR";
     errorDisplayed();
     result = 0;
 	} else {

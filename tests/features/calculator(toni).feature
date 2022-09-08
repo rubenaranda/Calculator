@@ -173,7 +173,6 @@ Examples:
 |          1234 |      - |       + |         31 |          1265 |
 |          9,26 |      * |       * |       2,15 |        19,909 |
 
-@ruben
 Scenario Outline: Doing a new operation
 Given the display shows the following value: "<displayNumber>"
 And the user presses the "<button>" button
@@ -269,33 +268,6 @@ Examples:
 Scenario Outline: Reenabling buttons with no error
 Given the display shows the following value: "1234567890"
 When the user presses the "<button>" button
-Then the "0" button should be enabled
-And the "+-" button should be disabled
-And the "1" button should be enabled
-And the "2" button should be enabled
-And the "3" button should be enabled
-And the "4" button should be enabled
-And the "5" button should be enabled
-And the "6" button should be enabled
-And the "7" button should be enabled
-And the "8" button should be enabled
-And the "9" button should be enabled
-And the "," button should be disabled
-And the "+" button should be enabled
-And the "-" button should be enabled
-And the "*" button should be enabled
-And the "/" button should be enabled
-
-Examples:
-|button|
-|   +  |
-|   -  |
-|   *  |
-|   /  |
-
-Scenario Outline: Reenabling buttons with no error
-Given the display shows the following value: "1234567890"
-When the user presses the "<button>" button
 Then the "0" button should be disabled
 And the "+-" button should be disabled
 And the "1" button should be enabled
@@ -316,28 +288,10 @@ And the "/" button should be enabled
 Examples:
 |button|
 |   C  |
-
-Scenario Outline: Reenabling buttons with no error
-Given the display shows the following value: "1234567890"
-When the user presses the "<button>" button
-Then the "0" button should be enabled
-And the "+-" button should be enabled
-And the "1" button should be enabled
-And the "2" button should be enabled
-And the "3" button should be enabled
-And the "4" button should be enabled
-And the "5" button should be enabled
-And the "6" button should be enabled
-And the "7" button should be enabled
-And the "8" button should be enabled
-And the "9" button should be enabled
-And the "," button should be disabled
-And the "+" button should be enabled
-And the "-" button should be enabled
-And the "*" button should be enabled
-And the "/" button should be enabled
-
-Examples:
+|   +  |
+|   -  |
+|   *  |
+|   /  |
 |   =  |
 
 Scenario Outline: Disabling buttons
@@ -366,7 +320,7 @@ Given the display shows the following value: "3,141592"
 Then the "," button should be disabled
 
 Scenario: Disabling because of error
-Given the display shows the following value: "1"
+Given the display shows the following value: 1
 And the user presses the "/" button
 And the user writes the number: "0"
 When the user presses the "=" button
