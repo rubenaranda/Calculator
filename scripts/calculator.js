@@ -24,6 +24,7 @@ function getDisplayValue(x) {
       results.innerText = "";
       results.innerText += x;
       firstNumber = x;
+      renablePlusMinusAndZero();
     }
   } else if (results.innerText.length <= 9 ||(results.innerText.length == 10 && results.innerText.includes(","))) {
     if (checkComa() === false) {
@@ -117,6 +118,8 @@ function checkLength() {
     (result.innerText.length == 12 && result.innerText.includes(",") == true && result.innerText.includes("-") == true)) {
     document.getElementById("comma").classList.add("disabled-comma-btn");
     document.getElementById("comma").disabled = true;
+    document.getElementById("plus-minus").classList.add("disabled-operator-btn");
+    document.getElementById("plus-minus").disabled = true;
     disableButtons()
   }
 }
@@ -167,6 +170,9 @@ function clickHighlight(button) {
 function setOperators(value) {
   if (operator == "") {
     firstNumber = document.getElementById("resultScreen").innerText;
+    document.getElementById("comma").classList.add("disabled-comma-btn");
+    document.getElementById("comma").disabled = true;
+    console.log(document.getElementById("comma").disabled)
     operator = value;
   } else if (secondNumber != 0 || ((secondNumber == 0 && (operator == '/' || operator == '*') && operator != previousKey))){
     firstNumber = calculate(operator);
@@ -182,6 +188,7 @@ function setOperators(value) {
     operator = value;
   }
   previousKey = value;
+
 }
 
 function getKeyNumbers() {
@@ -217,8 +224,6 @@ function getKeyNumbers() {
       getDisplayValue(event.key);
     }
     if (event.key === "Control" && currentDisplay != 'ERROR') {
-      document.getElementById('plus-minus').classList.add("disabled-operator-btn");
-      document.getElementById('plus-minus').disabled = true;
       if (operator != '' ){
         isNegative = false;
         setPositiveOrNegative();
@@ -230,9 +235,9 @@ function getKeyNumbers() {
 }
 
 function calculate(key) {
-  let display = document.getElementById("resultScreen").innerText
+  var display = document.getElementById("resultScreen").innerText
   if (secondNumber == 0 && operator != "") {
-    display = "ERROR";
+    document.getElementById("resultScreen").innerText = 'ERROR'
     errorDisplayed();
   } else if (operator == "+") {
     result = addOperation();
@@ -242,18 +247,16 @@ function calculate(key) {
     result = multiplyOperation();
   }  else if (operator == "/") {
     result = divideOperation();
-  } else if (display.length[display.length-1] == ',') {
-    console.log('hola')
-    result = display.slice(0,display.length-1)
+  } else if (display.toString()[display.length-1] == ',') {
+    result = display.toString().slice(0,display.length-1)
+    document.getElementById("resultScreen").innerText = result;
   }
 if (result.toString().length > 11 && result.toString().includes('.')) {
   document.getElementById("resultScreen").innerText = cuttingDecimals(result);
 } else if (result.toString().length > 10) {
   document.getElementById("resultScreen").innerText = "ERROR";
 } 
-else {
-  checkLength();
-}
+
 	return result;
 } 
 
@@ -319,9 +322,9 @@ function divideOperation() {
     changeCommaToDot ();
   } 
   if (secondNumber == "0" && operator == "/") {
+    console.log('hola')
     document.getElementById("resultScreen").innerText = "ERROR";
     errorDisplayed();
-    result = 0;
 	} else {
     result = parseFloat(firstNumber) / parseFloat(secondNumber);
     document.getElementById("resultScreen").innerText = changeDotToComma(result);
@@ -367,13 +370,30 @@ function unhighlightAll() {
   }
   document.getElementById("comma").classList.remove("disabled-comma-btn");
   document.getElementById("comma").disabled = false;
+  initalDisbale();
 }
 
-function calculateThirdNumber () {
-  if (result != null) {
+function resetNumbersAnsOperator () {
+  firstNumber = 0;
+  secondNumber = 0;
+  operator = "";
+}
 
-  }
+function initalDisbale(){
+  document.getElementById("plus-minus").classList.add("disabled-operator-btn");
+  document.getElementById("plus-minus").disabled = true;
+  document.getElementById("zero").classList.add("disabled-numeric-btn");
+  document.getElementById("zero").disabled = true;
+  console.log("inital");
+}
+
+function renablePlusMinusAndZero(){
+  document.getElementById("zero").classList.remove("disabled-numeric-btn");
+  document.getElementById("zero").disabled = false;
+  document.getElementById("plus-minus").classList.remove("disabled-operator-btn");
+  document.getElementById("plus-minus").disabled = false;
 }
 
 getKeyNumbers();
+initalDisbale();
 

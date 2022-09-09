@@ -14,7 +14,7 @@
 
         <div id="firstRow">
             <button id="clear-button" class="operator-btn" value="0"  data-testid="C" onclick="clearInput(document.getElementById('clear-button').value)">C</button>
-            <button id="plus-minus" class="operator-btn" value="+/-" data-testid="+-" onclick="clickHighlight(document.getElementById('plus-minus'));setPositiveOrNegative()">&plusmn</button>
+            <button id="plus-minus" class="operator-btn" value="+/-" data-testid="+-" onclick="setPositiveOrNegative()">&plusmn</button>
             <button id="plus" class="operator-btn" value="+" data-testid="+" onclick="clickHighlight(document.getElementById('plus'));setOperators(document.getElementById('plus').value);unhighlightNumericButtons()">+</button>
         </div>
         <div id="secondRow">
@@ -38,7 +38,7 @@
         <div id="fifthRow">
             <button id="zero"  class="numbers-btn" value="0" data-testid="0" onclick="getDisplayValue(document.getElementById('zero').value)">0</button>
             <button id="comma" class="numbers-btn" value="," data-testid="," onclick="getDisplayValue(document.getElementById('comma').value)">,</button>
-            <button id="equal-button" class="operator-btn" value="=" data-testid="=" onclick="unhighlightAll();calculate('=');errorDisplayed()">=</button>
+            <button id="equal-button" class="operator-btn" value="=" data-testid="=" onclick="unhighlightAll();calculate('=');errorDisplayed();resetNumbersAnsOperator()">=</button>
         </div>
 
     </div>
