@@ -294,7 +294,7 @@ Examples:
 |   *  |
 |   /  |
 
-@current
+
 Scenario Outline: Reenabling buttons with no error
 Given the display shows the following value: "1234567890"
 When the user presses the "<button>" button
@@ -319,7 +319,6 @@ Examples:
 |button|
 |   C  |
 
-@current
 Scenario Outline: Reenabling buttons with no error
 Given the display shows the following value: "1234567890"
 When the user presses the "<button>" button

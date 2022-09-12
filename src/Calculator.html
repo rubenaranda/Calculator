@@ -37,7 +37,7 @@
         </div>
         <div id="fifthRow">
             <button id="zero"  class="numbers-btn" value="0" data-testid="0" onclick="getDisplayValue(document.getElementById('zero').value)">0</button>
-            <button id="comma" class="numbers-btn" value="," data-testid="," onclick="getDisplayValue(document.getElementById('comma').value)">,</button>
+            <button id="comma" class="numbers-btn" value="," data-testid="," onclick="getDisplayValue(document.getElementById('comma').value);disbaleComma()">,</button>
             <button id="equal-button" class="operator-btn" value="=" data-testid="=" onclick="unhighlightAll();calculate('=');errorDisplayed();resetNumbersAnsOperator()">=</button>
         </div>
 

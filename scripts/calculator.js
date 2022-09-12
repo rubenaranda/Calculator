@@ -20,6 +20,7 @@ function getDisplayValue(x) {
     if (x == ",") {
       document.getElementById("resultScreen").innerText = "0,";
       firstNumber = "0,";
+      renablePlusMinusAndZero();
     } else if (operator == "") {
       results.innerText = "";
       results.innerText += x;
@@ -29,6 +30,7 @@ function getDisplayValue(x) {
   } else if (results.innerText.length <= 9 ||(results.innerText.length == 10 && results.innerText.includes(","))) {
     if (checkComa() === false) {
       document.getElementById("resultScreen").innerText += x;
+      console.log('result')
     } else if (checkComa() === true && x != ",") {
       document.getElementById("comma").classList.add("disabled-comma-btn");
       document.getElementById("comma").disabled = true;
@@ -39,15 +41,17 @@ function getDisplayValue(x) {
   if (operator != "" || isMutipleOperation == true) {
     secondNumber = updateDisplay(x, secondNumber);
   }
-
   previousKey = x;
+  document.getElementById("plus-minus").classList.remove("disabled-operator-btn");
+  document.getElementById("plus-minus").disabled = false;
 }
 
 function updateDisplay(value, number) {
   if (number == "0") {
     unhighlightNumericButtons();
-    document.getElementById("comma").classList.remove("disabled-comma-btn");
-    if (value == ",") {
+    document.getElementById("comma").classList.add("disabled-comma-btn");
+    document.getElementById("comma").disabled = true;
+    if (value == "," && document.getElementById("comma").disabled == false) {
       document.getElementById("resultScreen").innerText = "0,";
       document.getElementById("comma").classList.add("disabled-comma-btn");
       document.getElementById("comma").disabled = true;
@@ -118,8 +122,6 @@ function checkLength() {
     (result.innerText.length == 12 && result.innerText.includes(",") == true && result.innerText.includes("-") == true)) {
     document.getElementById("comma").classList.add("disabled-comma-btn");
     document.getElementById("comma").disabled = true;
-    document.getElementById("plus-minus").classList.add("disabled-operator-btn");
-    document.getElementById("plus-minus").disabled = true;
     disableButtons()
   }
 }
@@ -170,10 +172,9 @@ function clickHighlight(button) {
 function setOperators(value) {
   if (operator == "") {
     firstNumber = document.getElementById("resultScreen").innerText;
-    document.getElementById("comma").classList.add("disabled-comma-btn");
-    document.getElementById("comma").disabled = true;
-    console.log(document.getElementById("comma").disabled)
     operator = value;
+    document.getElementById("plus-minus").classList.add("disabled-operator-btn");
+    document.getElementById("plus-minus").disabled = true;
   } else if (secondNumber != 0 || ((secondNumber == 0 && (operator == '/' || operator == '*') && operator != previousKey))){
     firstNumber = calculate(operator);
 	  isMutipleOperation = true;
@@ -188,7 +189,8 @@ function setOperators(value) {
     operator = value;
   }
   previousKey = value;
-
+  document.getElementById("comma").classList.add("disabled-comma-btn");
+  document.getElementById("comma").disabled = true;
 }
 
 function getKeyNumbers() {
@@ -286,7 +288,7 @@ function errorDisplayed() {
  
 function addOperation() {
   secondNumber = document.getElementById("resultScreen").innerText;
-
+  
   if (firstNumber.toString().includes(",") || secondNumber.toString().includes(",")) {
     changeCommaToDot ();
   }
@@ -392,6 +394,11 @@ function renablePlusMinusAndZero(){
   document.getElementById("zero").disabled = false;
   document.getElementById("plus-minus").classList.remove("disabled-operator-btn");
   document.getElementById("plus-minus").disabled = false;
+}
+
+function disbaleComma() {
+  document.getElementById("comma").classList.add("disabled-comma-btn");
+  document.getElementById("comma").disabled = true;
 }
 
 getKeyNumbers();
