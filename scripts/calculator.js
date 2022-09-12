@@ -32,8 +32,7 @@ function getDisplayValue(x) {
       document.getElementById("resultScreen").innerText += x;
       console.log('result')
     } else if (checkComa() === true && x != ",") {
-      document.getElementById("comma").classList.add("disabled-comma-btn");
-      document.getElementById("comma").disabled = true;
+     disableComma();
       document.getElementById("resultScreen").innerText += x;
     }
   }
@@ -51,11 +50,9 @@ function updateDisplay(value, number) {
     unhighlightNumericButtons();
     if (value == "," && document.getElementById("comma").disabled == false) {
       document.getElementById("resultScreen").innerText = "0,";
-      document.getElementById("comma").classList.add("disabled-comma-btn");
-      document.getElementById("comma").disabled = true;
+      disableComma();
     } else {
-      document.getElementById("comma").classList.remove("disabled-comma-btn");
-      document.getElementById("comma").disabled = false;
+      enableComma();
       document.getElementById("resultScreen").innerText = "";
       document.getElementById("resultScreen").innerText += value;
     }
@@ -120,32 +117,27 @@ function checkLength() {
     (result.innerText.length == 11 && result.innerText.includes(",") == false && result.innerText.includes("-") == true) ||
     (result.innerText.length == 11 && result.innerText.includes(",") == true && result.innerText.includes("-") == false) ||
     (result.innerText.length == 12 && result.innerText.includes(",") == true && result.innerText.includes("-") == true)) {
-    document.getElementById("comma").classList.add("disabled-comma-btn");
-    document.getElementById("comma").disabled = true;
-    disableButtons()
+    disableComma();
+    disableButtons();
   }
 }
 
 function checkDecimalLength(result) {
   if (result.toString().length == 11 && result.toString().includes(',') ){
-    return result
+    return result;
   } else if (result.toString().length > 11 && result.toString().includes(',')) {
-    return cuttingDecimals(result)
+    return cuttingDecimals(result);
   } 
 }
 
 function cuttingDecimals(resultToCut) {
-  let maxLength = 10
-
-  let cutedResult = resultToCut
-
+  let maxLength = 10;
+  let cutedResult = resultToCut;
   while (Math.abs(cutedResult.toString().length > 11)) {
     cutedResult = resultToCut.toFixed(maxLength);
     maxLength --;
   }
-  
-  let finalResult = cutedResult
-
+  let finalResult = cutedResult;
   for (let i = cutedResult.length; i >= 0; i--) {
     if (cutedResult[i] == 0) {
       finalResult = finalResult.slice(0,finalResult.length-1)
@@ -189,8 +181,7 @@ function setOperators(value) {
     operator = value;
   }
   previousKey = value;
-  document.getElementById("comma").classList.add("disabled-comma-btn");
-  document.getElementById("comma").disabled = true;
+  disableComma();
 }
 
 function getKeyNumbers() {
@@ -212,7 +203,6 @@ function getKeyNumbers() {
       setOperators(event.key);
       setHiglightOperator("divide");
     }
-
     if (event.key == "Enter") {
       unhighlightAll();
       calculate("=");
@@ -239,7 +229,7 @@ function getKeyNumbers() {
 function calculate(key) {
   var display = document.getElementById("resultScreen").innerText
   if (secondNumber == 0 && operator != "") {
-    document.getElementById("resultScreen").innerText = 'ERROR'
+    document.getElementById("resultScreen").innerText = 'ERROR';
     errorDisplayed();
   } else if (operator == "+") {
     result = addOperation();
@@ -253,12 +243,11 @@ function calculate(key) {
     result = display.toString().slice(0,display.length-1)
     document.getElementById("resultScreen").innerText = result;
   }
-if (result.toString().length > 11 && result.toString().includes('.')) {
+  if (result.toString().length > 11 && result.toString().includes('.')) {
   document.getElementById("resultScreen").innerText = cuttingDecimals(result);
-} else if (result.toString().length > 10) {
+  } else if (result.toString().length > 10) {
   document.getElementById("resultScreen").innerText = "ERROR";
-} 
-
+  } 
 	return result;
 } 
 
@@ -288,13 +277,12 @@ function errorDisplayed() {
  
 function addOperation() {
   secondNumber = document.getElementById("resultScreen").innerText;
-  
   if (firstNumber.toString().includes(",") || secondNumber.toString().includes(",")) {
     changeCommaToDot ();
   }
   result = parseFloat(firstNumber) + parseFloat(secondNumber);
   document.getElementById("resultScreen").innerText = changeDotToComma(result);
-  return result
+  return result;
 }
 
 function minusOperation() {
@@ -304,8 +292,7 @@ function minusOperation() {
   } 
   result = parseFloat(firstNumber) - parseFloat(secondNumber);
   document.getElementById("resultScreen").innerText = changeDotToComma(result);
-  return result
-  
+  return result;
 }
 
 function multiplyOperation() {
@@ -313,9 +300,9 @@ function multiplyOperation() {
   if (firstNumber.toString().includes(",") || secondNumber.toString().includes(",")) {
     changeCommaToDot ();
   } 
- result = parseFloat(firstNumber) * parseFloat(secondNumber);
- document.getElementById("resultScreen").innerText = changeDotToComma(result);
- return result
+  result = parseFloat(firstNumber) * parseFloat(secondNumber);
+  document.getElementById("resultScreen").innerText = changeDotToComma(result);
+  return result;
 }
 
 function divideOperation() {
@@ -330,7 +317,7 @@ function divideOperation() {
     result = parseFloat(firstNumber) / parseFloat(secondNumber);
     document.getElementById("resultScreen").innerText = changeDotToComma(result);
   }
-  return result
+  return result;
 }
 
 
@@ -371,8 +358,7 @@ function unhighlightAll() {
     numericalButtons[i].classList.remove("disabled-numeric-btn");
     numericalButtons[i].disabled = false;
   }
-  document.getElementById("comma").classList.remove("disabled-comma-btn");
-  document.getElementById("comma").disabled = false;
+  enableComma();
   initalDisbale();
 }
 
@@ -397,11 +383,15 @@ function renablePlusMinusAndZero(){
   document.getElementById("plus-minus").disabled = false;
 }
 
-function disbaleComma() {
+function enableComma() {
+  document.getElementById("comma").classList.remove("disabled-comma-btn");
+  document.getElementById("comma").disabled = false;
+}
+
+function disableComma() {
   document.getElementById("comma").classList.add("disabled-comma-btn");
   document.getElementById("comma").disabled = true;
 }
 
 getKeyNumbers();
 initalDisbale();
-
