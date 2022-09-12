@@ -49,13 +49,13 @@ function getDisplayValue(x) {
 function updateDisplay(value, number) {
   if (number == "0") {
     unhighlightNumericButtons();
-    document.getElementById("comma").classList.add("disabled-comma-btn");
-    document.getElementById("comma").disabled = true;
     if (value == "," && document.getElementById("comma").disabled == false) {
       document.getElementById("resultScreen").innerText = "0,";
       document.getElementById("comma").classList.add("disabled-comma-btn");
       document.getElementById("comma").disabled = true;
     } else {
+      document.getElementById("comma").classList.remove("disabled-comma-btn");
+      document.getElementById("comma").disabled = false;
       document.getElementById("resultScreen").innerText = "";
       document.getElementById("resultScreen").innerText += value;
     }
@@ -324,7 +324,6 @@ function divideOperation() {
     changeCommaToDot ();
   } 
   if (secondNumber == "0" && operator == "/") {
-    console.log('hola')
     document.getElementById("resultScreen").innerText = "ERROR";
     errorDisplayed();
 	} else {
@@ -357,6 +356,8 @@ function unhighlightNumericButtons() {
     numericalButtons[i].classList.remove("disabled-numeric-btn");
     numericalButtons[i].disabled = false;
   }
+  document.getElementById("comma").classList.add("disabled-comma-btn");
+  document.getElementById("comma").disabled = true;
 }
 
 function unhighlightAll() {
